@@ -42,8 +42,7 @@ async function changeLanguage(languageCode: string) {
 		}
 
 		if (
-			typeof window.translate !== "undefined" &&
-			window.translate.language &&
+			window.translate?.language &&
 			typeof window.translate.language.getLocal === "function"
 		) {
 			// 检查是否选择的是简体中文，且当前本地语言也是简体中文
@@ -155,7 +154,6 @@ onDestroy(() => {
                     class="flex items-center gap-3 p-2 rounded-lg hover:bg-[var(--btn-plain-bg-hover)] transition-colors text-left w-full {currentLanguage === lang.code ? 'bg-[var(--btn-plain-bg-hover)] border-1 border-[var(--primary)]' : ''}"
                     on:click={() => changeLanguage(lang.code)}
                 >
-                    <span class="text-lg transition text-black/75 dark:text-white/75">{lang.icon}</span>
                     <span class="text-sm transition text-black/75 dark:text-white/75 {currentLanguage === lang.code ? 'font-medium text-[var(--primary)]' : ''}">{lang.name}</span>
                     {#if currentLanguage === lang.code}
                         <span class="ml-auto text-[var(--primary)]">✓</span>
