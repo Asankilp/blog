@@ -21,7 +21,7 @@ import { getTranslateLanguageFromConfig } from "./utils/language-utils";
 const SITE_LANG = "en"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
-	title: "Mizuki",
+	title: "ErrOrO's Space",
 	subtitle: "One demo website",
 
 	lang: SITE_LANG,
@@ -41,9 +41,9 @@ export const siteConfig: SiteConfig = {
 		ignoreTags: ["script", "style", "code", "pre"], // 翻译时忽略的 HTML 标签
 	},
 	bangumi: {
-		userId: "your-bangumi-id", // 在此处设置你的Bangumi用户ID，可以设置为 "sai" 测试
+		userId: "asankilp", // 在此处设置你的Bangumi用户ID，可以设置为 "sai" 测试
 	},
-  
+
 	anime: {
 		mode: "local", // 番剧页面模式："bangumi" 使用Bangumi API，"local" 使用本地配置
 	},
@@ -94,7 +94,7 @@ export const siteConfig: SiteConfig = {
 
 		homeText: {
 			enable: true, // 在主页显示自定义文本
-			title: "Beautiful Mizuki!", // 主页横幅主标题
+			title: "ErrOrO's Space!", // 主页横幅主标题
 
 			subtitle: [
 				"A Showcase Demo Site",
@@ -193,7 +193,7 @@ export const navBarConfig: NavBarConfig = {
 			children: [
 				{
 					name: "GitHub",
-					url: "https://github.com/matsuzaka-yuki/Mizuki",
+					url: "https://github.com/Asankilp/blog",
 					external: true,
 					icon: "fa6-brands:github",
 				},
@@ -202,12 +202,6 @@ export const navBarConfig: NavBarConfig = {
 					url: "https://space.bilibili.com/701864046",
 					external: true,
 					icon: "fa6-brands:bilibili",
-				},
-				{
-					name: "Gitee",
-					url: "https://gitee.com/matsuzakayuki/Mizuki",
-					external: true,
-					icon: "mdi:git",
 				},
 			],
 		},
@@ -274,7 +268,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/matsuzaka-yuki",
+			url: "https://github.com/Asankilp",
 		},
 		{
 			name: "Discord",
@@ -424,7 +418,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 				collapseThreshold: 20,
 			},
 		},
-
 	],
 
 	// 默认动画配置
@@ -503,7 +496,7 @@ export const pioConfig: import("./types/config").PioConfig = {
 		home: "Click here to go back to homepage!", // 首页提示
 		skin: ["Want to see my new outfit?", "The new outfit looks great~"], // 换装提示
 		close: "QWQ See you next time~", // 关闭提示
-		link: "https://github.com/matsuzaka-yuki/Mizuki", // 关于链接
+		link: "https://github.com/Asankilp/blog", // 关于链接
 	},
 };
 
