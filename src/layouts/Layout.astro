@@ -8,6 +8,7 @@ import MusicPlayer from "@components/widget/MusicPlayer.svelte";
 import Pio from "@components/widget/Pio.svelte"; // 使用 Svelte 版本的 Pio 组件
 import { profileConfig, siteConfig } from "@/config";
 import { widgetConfigs } from "../config";
+import { umamiConfig } from "../config.ts";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -21,8 +22,6 @@ import {
 import { defaultFavicons } from "../constants/icon";
 import type { Favicon, SakuraConfig } from "../types/config";
 import { pathsEqual, url } from "../utils/url-utils";
-
-import { umamiConfig } from '../config.ts';
 
 import "katex/dist/katex.css";
 import "../styles/mobile-navbar.css";
@@ -220,7 +219,7 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 		{umamiEnabled && umamiScripts && <Fragment set:html={umamiScripts} />}
 
 </head>
-	<body class=" min-h-screen " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner, "zen-maru-gothic-enabled": siteConfig.font.zenMaruGothic.enable, "hanalei-enabled": siteConfig.font.hanalei.enable}]}
+	<body class=" min-h-screen " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner, "zen-maru-gothic-enabled": siteConfig.font.zenMaruGothic.enable, "hanalei-enabled": siteConfig.font.hanalei.enable, "harmony-os-sans-enabled": siteConfig.font.harmonyOSSans.enable}]}
 		  data-overlayscrollbars-initialize
 	>
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KRX3XGVH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

@@ -27,6 +27,13 @@
 	font-display: swap;
 }
 
+@font-face {
+    font-family: "HarmonyOS Sans";
+    src: url("/assets/font/HarmonyOS_Sans_SC_Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,6 +51,12 @@ html {
 /* 当启用 Hanalei 字体时应用为全局字体 */
 .hanalei-enabled {
   font-family: 'Hanalei', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* 当启用 HarmonyOS Sans 字体时应用为全局字体 */
+.harmony-os-sans-enabled {
+  font-family: 'HarmonyOS Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 }
 
 /* 页面顶部渐变高光效果 */

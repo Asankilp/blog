@@ -30,6 +30,9 @@ export type SiteConfig = {
 		hanalei: {
 			enable: boolean; // 是否使用 Hanalei 作为全局字体
 		};
+		harmonyOSSans: {
+			enable: boolean; // 是否使用 HarmonyOS Sans 作为全局字体
+		};
 	};
 
 	translate?: {
