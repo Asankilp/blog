@@ -81,7 +81,9 @@ export const getFeaturedProjects = () => {
 export const getAllTechStack = () => {
 	const techSet = new Set<string>();
 	projectsData.forEach((project) => {
-		project.techStack.forEach((tech) => techSet.add(tech));
+		project.techStack.forEach((tech) => {
+			techSet.add(tech);
+		});
 	});
 	return Array.from(techSet).sort();
 };
