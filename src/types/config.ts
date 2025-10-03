@@ -46,12 +46,11 @@ export type SiteConfig = {
 	bangumi?: {
 		userId?: string; // Bangumi用户ID
 	};
-	
+
 	// 添加番剧页面配置
 	anime?: {
 		mode?: "bangumi" | "local"; // 番剧页面模式
 	};
-
 
 	banner: {
 		enable: boolean;
@@ -116,7 +115,6 @@ export enum LinkPreset {
 
 	Projects = 7,
 	Skills = 8,
-	Timeline = 9,
 }
 
 export type NavBarLink = {
@@ -140,7 +138,6 @@ export type ProfileConfig = {
 		url: string;
 		icon: string;
 	}[];
-
 };
 
 export type LicenseConfig = {

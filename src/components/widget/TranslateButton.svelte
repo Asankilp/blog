@@ -10,16 +10,16 @@ let currentLanguage = "";
 
 // 支持的语言列表
 const languages = [
-	{ code: "chinese_simplified", name: "简体中文", icon: "🇨🇳" },
-	{ code: "chinese_traditional", name: "繁體中文", icon: "🇹🇼" },
-	{ code: "english", name: "English", icon: "🇺🇸" },
-	{ code: "japanese", name: "日本語", icon: "🇯🇵" },
-	{ code: "korean", name: "한국어", icon: "🇰🇷" },
-	{ code: "french", name: "Français", icon: "🇫🇷" },
-	{ code: "german", name: "Deutsch", icon: "🇩🇪" },
-	{ code: "spanish", name: "Español", icon: "🇪🇸" },
-	{ code: "russian", name: "Русский", icon: "🇷🇺" },
-	{ code: "arabic", name: "العربية", icon: "🇸🇦" },
+	{ code: "chinese_simplified", name: "简体中文" },
+	{ code: "chinese_traditional", name: "繁體中文" },
+	{ code: "english", name: "English" },
+	{ code: "japanese", name: "日本語" },
+	{ code: "korean", name: "한국어" },
+	{ code: "french", name: "Français" },
+	{ code: "german", name: "Deutsch" },
+	{ code: "spanish", name: "Español" },
+	{ code: "russian", name: "Русский" },
+	{ code: "arabic", name: "العربية" },
 ];
 
 // 根据配置文件的语言设置获取默认翻译语言
