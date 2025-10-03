@@ -37,7 +37,13 @@ let links: NavBarLink[] = navBarConfig.links.map(
         "!overflow-visible max-w-[var(--page-width)] h-[4.5rem] mx-auto flex items-center justify-between px-4"]}>
         <a href={url('/')} class="btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95">
             <div class="flex flex-row text-[var(--primary)] items-center text-md">
-                <Icon name="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
+                <svg class="w-[1.75rem] h-[1.75rem] mb-1 mr-2 fill-current stroke-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path d="M168.448 104.575a2.148 4.446 0 0 1-2.148 4.445 2.148 4.446 0 0 1-2.149-4.445 2.148 4.446 0 0 1 2.149-4.446 2.148 4.446 0 0 1 2.148 4.446" transform="matrix(1.05575 .27872 -.28152 1.04527 -117.998 -144.535)" fill="currentColor" stroke="currentColor" stroke-width="2.30885" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15.11 185.034a2.914 5.027 0 0 1-2.915 5.027 2.914 5.027 0 0 1-2.914-5.027 2.914 5.027 0 0 1 2.914-5.027 2.914 5.027 0 0 1 2.914 5.027" transform="matrix(.89428 -.62156 .6278 .8854 -117.998 -144.535)" fill="currentColor" stroke="currentColor" stroke-width="2.63252" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M115.153 151.38a2.914 5.027 0 0 1-2.914 5.027 2.914 5.027 0 0 1-2.914-5.027 2.914 5.027 0 0 1 2.914-5.028 2.914 5.027 0 0 1 2.914 5.027" transform="matrix(1.08836 -.09559 .09655 1.07756 -117.998 -144.535)" fill="currentColor" stroke="currentColor" stroke-width="2.63252" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6.82 189.986a2.507 4.325 0 0 1-2.507 4.325 2.507 4.325 0 0 1-2.507-4.325 2.507 4.325 0 0 1 2.507-4.325 2.507 4.325 0 0 1 2.507 4.325" transform="matrix(.89428 -.62156 .6278 .8854 -117.998 -144.535)" fill="currentColor" stroke="currentColor" stroke-width="2.26484" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M636.43 289.918c-3.042-.765-5.726-2.858-7.21-5.622-.968-1.805-1.432-3.86-1.476-5.908-.043-2.048.325-4.092.943-6.045a24 24 0 0 1 3.53-6.952l4.284-3.294c3.793-2.4 8.654-3.036 12.938-1.695s7.913 4.636 9.661 8.77c1.03 2.438 1.416 5.23.596 7.746-.41 1.258-1.118 2.426-2.09 3.323s-2.21 1.516-3.522 1.692a6.03 6.03 0 0 1-3.548-.617l-6.498 3.11a10.46 10.46 0 0 1-3.033 3.565 10.46 10.46 0 0 1-4.575 1.927" transform="matrix(.42448 .03626 -.03662 .42027 -243.567 -114.836)" fill="currentColor" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" stroke-opacity="1"/>
+                </svg>
                 {siteConfig.title}
             </div>
         </a>
@@ -178,6 +184,67 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSemifullScrollDetection);
 } else {
     initSemifullScrollDetection();
+}
+
+// Inline external SVGs so they can inherit currentColor and be updated dynamically
+async function inlineExternalSvgs() {
+    const imgs = Array.from(document.querySelectorAll('img[data-inline-src]'));
+    await Promise.all(imgs.map(async (img) => {
+        const src = img.getAttribute('data-inline-src');
+        if (!src) return;
+        try {
+            const res = await fetch(src, { cache: 'no-cache' });
+            if (!res.ok) return;
+            const text = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'image/svg+xml');
+            const svg = doc.querySelector('svg');
+            if (!svg) return;
+
+            // Transfer useful attributes from img to svg
+            const className = img.getAttribute('class') || '';
+            svg.setAttribute('class', className + ' inline-svg');
+            svg.setAttribute('role', 'img');
+
+            // Remove fixed width/height so tailwind classes work, but keep viewBox
+            svg.removeAttribute('width');
+            svg.removeAttribute('height');
+
+            // Ensure svg inherits color via currentColor: set style.color from parent
+            const parentColor = window.getComputedStyle(img.parentElement).color;
+            svg.style.color = parentColor;
+
+            img.replaceWith(svg);
+        } catch (e) {
+            console.error('Failed to inline SVG', src, e);
+        }
+    }));
+}
+
+function updateInlinedSvgColors() {
+    document.querySelectorAll('svg.inline-svg').forEach((svg) => {
+        const parent = svg.parentElement || svg;
+        svg.style.color = window.getComputedStyle(parent).color;
+    });
+}
+
+// Observe theme changes (dark class toggles on documentElement) and update colors
+const themeObserver = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+        if (m.attributeName === 'class') {
+            updateInlinedSvgColors();
+            break;
+        }
+    }
+});
+themeObserver.observe(document.documentElement, { attributes: true });
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        inlineExternalSvgs().then(() => updateInlinedSvgColors());
+    });
+} else {
+    inlineExternalSvgs().then(() => updateInlinedSvgColors());
 }
 </script>
 
