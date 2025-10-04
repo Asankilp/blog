@@ -154,7 +154,7 @@ export const navBarConfig: NavBarConfig = {
 			children: [
 				{
 					name: "GitHub",
-					url: "https://github.com/Asankilp/blog",
+					url: "https://github.com/Asankilp",
 					external: true,
 					icon: "fa6-brands:github",
 				},
@@ -163,6 +163,12 @@ export const navBarConfig: NavBarConfig = {
 					url: "https://space.bilibili.com/422499448",
 					external: true,
 					icon: "fa6-brands:bilibili",
+				},
+				{
+					name: "Steam",
+					url: "https://steamcommunity.com/id/asankilp/",
+					external: true,
+					icon: "fa6-brands:steam",
 				},
 			],
 		},
@@ -220,6 +226,11 @@ export const profileConfig: ProfileConfig = {
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/Asankilp",
+		},
+		{
+			name: "Steam",
+			icon: "fa6-brands:steam",
+			url: "https://steamcommunity.com/id/asankilp/",
 		},
 	],
 };
