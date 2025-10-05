@@ -33,6 +33,9 @@ export type SiteConfig = {
 		harmonyOSSans: {
 			enable: boolean; // 是否使用 HarmonyOS Sans 作为全局字体
 		};
+		xiaolai: {
+			enable: boolean; // 是否使用小赖字体作为全局字体
+		};
 	};
 
 	translate?: {

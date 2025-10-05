@@ -121,7 +121,10 @@ export const siteConfig: SiteConfig = {
 			enable: false, // 启用 Hanalei 字体作为全局字体，适合中文去使用
 		},
 		harmonyOSSans: {
-			enable: true, // 启用 HarmonyOS Sans 字体作为全局字体
+			enable: false, // 启用 HarmonyOS Sans 字体作为全局字体
+		},
+		xiaolai: {
+			enable: true, // 启用小赖字体作为全局字体
 		},
 	},
 	showLastModified: true, // 控制“上次编辑”卡片显示的开关
