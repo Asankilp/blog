@@ -1,5 +1,4 @@
 import { getImage } from "astro:assets";
-import { getCollection } from "astro:content";
 import type { RSSFeedItem } from "@astrojs/rss";
 import rss from "@astrojs/rss";
 import type { APIContext, ImageMetadata } from "astro";
@@ -8,6 +7,7 @@ import { parse as htmlParser } from "node-html-parser";
 import sanitizeHtml from "sanitize-html";
 import { siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
+import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 const markdownParser = new MarkdownIt();
 
@@ -93,6 +93,31 @@ export async function GET(context: APIContext) {
 				// images starting with `/` are in public dir
 				img.setAttribute("src", new URL(src, context.site).href);
 			}
+		}
+
+		const anchors = html.querySelectorAll("a");
+		for (const anchor of anchors) {
+			const href = anchor.getAttribute("href");
+			if (!href) continue;
+
+			if (!isAttachmentUrl(href)) {
+				continue;
+			}
+
+			const hasProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(href);
+			if (hasProtocol) {
+				continue;
+			}
+
+			let resolvedHref: string;
+			if (href.startsWith("/")) {
+				resolvedHref = new URL(href, context.site).href;
+			} else {
+				const postBaseUrl = new URL(`/posts/${post.slug}/`, context.site);
+				resolvedHref = new URL(href, postBaseUrl).href;
+			}
+
+			anchor.setAttribute("href", resolvedHref);
 		}
 
 		feed.push({
