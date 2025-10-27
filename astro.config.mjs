@@ -171,6 +171,7 @@ export default defineConfig({
 		],
 	},
 	vite: {
+		assetsInclude: ["**/*.gz"],
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {
