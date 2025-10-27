@@ -337,12 +337,13 @@ p.interactive()
 
 ![image.png](image.png)
 
-可看见基于 `strcmp()`函数的密码验证，该函数有一个漏洞，具体为：
+可看见基于 `strcmp()`函数的密码验证，该段代码有一个漏洞，具体为：
 
 - `strcmp("string", "string")` → 返回 `0`（相等）
 - `strcmp("string", array())` → 返回 `NULL`
-- `NULL == 0` 在PHP中为 `true`
+- `NULL == 0` 在PHP中为 `true`（漏洞暴露点）
 
+该处漏洞暴露点使用了双等号 `==` 进行比较，即*弱比较*。
 因此需要将传入的 `password`设为数组类型，即可通过验证。
 
 ![QQ20251025-103349.png](QQ20251025-103349.png)
