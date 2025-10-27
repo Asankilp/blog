@@ -2,14 +2,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
-const attachmentsExtensions = [
-	".tar.gz",
-	".gz",
-	".zip",
-	".rar",
-	".7z",
-] as const;
+import { isAttachmentPath } from "./attachment-utils";
 
 const postsDir = fileURLToPath(new URL("../content/posts", import.meta.url));
 
@@ -26,17 +19,12 @@ async function collectAttachments(
 			continue;
 		}
 
-		if (isAttachment(fullPath)) {
+		if (isAttachmentPath(fullPath)) {
 			const relative = path.relative(baseDir, fullPath);
 			files.push(relative);
 		}
 	}
 	return files;
-}
-
-function isAttachment(filePath: string): boolean {
-	const lower = filePath.toLowerCase();
-	return attachmentsExtensions.some((ext) => lower.endsWith(ext));
 }
 
 async function ensureDir(dirPath: string): Promise<void> {
@@ -73,7 +61,7 @@ export function copyPostAttachmentsIntegration() {
 						if (!pathname.startsWith("/posts/")) {
 							return next();
 						}
-						if (!isAttachment(pathname)) {
+						if (!isAttachmentPath(pathname)) {
 							return next();
 						}
 						const relPath = pathname.replace(/^\/posts\//, "");
