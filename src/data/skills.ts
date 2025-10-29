@@ -55,7 +55,7 @@ export const skillsData: Skill[] = [
 		id: "rust",
 		name: "Rust",
 		description:
-			"A systems programming language focusing on safety, speed, and concurrency, with no garbage collector.",
+			"系统编程语言，注重安全性、速度和并发性，无垃圾回收器。",
 		icon: "logos:rust",
 		category: "backend",
 		level: "beginner",
