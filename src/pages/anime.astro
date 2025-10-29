@@ -147,6 +147,9 @@ if (ANIME_MODE === "local") {
 	// 获取与处理在看列表（type=3）看过列表（type=2）
 	const watchingData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 3);
 	const completedData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 2);
+  const plannedData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 1);
+  const onHoldData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 4);
+  const droppedData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 5);
 
 	const watchingList = watchingData
 		? await processBangumiData(watchingData, "watching")
@@ -154,8 +157,17 @@ if (ANIME_MODE === "local") {
 	const completedList = completedData
 		? await processBangumiData(completedData, "completed")
 		: [];
+  const plannedList = plannedData
+    ? await processBangumiData(plannedData, "planned")
+    : [];
+  const onHoldList = onHoldData
+    ? await processBangumiData(onHoldData, "onhold")
+    : [];
+  const droppedList = droppedData
+    ? await processBangumiData(droppedData, "dropped")
+    : [];
 
-	animeList = [...watchingList, ...completedList];
+	animeList = [...watchingList, ...completedList, ...plannedList, ...onHoldList, ...droppedList];
 }
 
 // 获取状态的翻译文本和样式
@@ -182,6 +194,20 @@ function getStatusInfo(status: string) {
 					"bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
 				icon: "⏰",
 			};
+    case "onhold":
+      return {
+        text: i18n(I18nKey.animeStatusOnHold),
+        class:
+          "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+        icon: "⏸",
+      };
+    case "dropped":
+      return {
+        text: i18n(I18nKey.animeStatusDropped),
+        class:
+          "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+        icon: "🗑️",
+      };
 		default:
 			return {
 				text: status,
