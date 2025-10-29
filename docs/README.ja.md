@@ -5,18 +5,18 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![Mizuki Preview](../README.png)
+![Mizuki Preview](../README.webp)
 
 <table>
   <tr>
-    <td><img alt="" src="docs/image/1.png"></td>
-    <td><img alt="" src="docs/image/2.png"></td>
-    <td><img alt="" src="docs/image/3.png"></td>
+    <td><img alt="" src="docs/image/1.webp"></td>
+    <td><img alt="" src="docs/image/2.webp"></td>
+    <td><img alt="" src="docs/image/3.webp"></td>
   <tr>
   <tr>
-    <td><img alt="" src="docs/image/4.png"></td>
-    <td><img alt="" src="docs/image/5.png"></td>
-    <td><img alt="" src="docs/image/6.png"></td>
+    <td><img alt="" src="docs/image/4.webp"></td>
+    <td><img alt="" src="docs/image/5.webp"></td>
+    <td><img alt="" src="docs/image/6.webp"></td>
   <tr>
 </table>
 
@@ -31,7 +31,14 @@
 [**日本語**](./README.ja.md) /
 [**中文繁体**](./README.tw.md) /
 
-## 🆕 v4.9 アップデート
+
+## 🆕 v6.0 アップデート
+- **ページリファクタリング**: アニメ、タイムライン、プロジェクト、スキル、アルバム、フレンドリンク、日記、アバウトページを完全にリファクタリングし、パフォーマンスとユーザーエクスペリエンスを向上させました。
+- **ページ切り替え機能**: ページ切り替え機能とSEO最適化モジュールを追加し、機能ページの表示/非表示を制御できるようになりました。
+- **新しいグリッドレイアウト**: 新しいグリッド記事リストレイアウトを導入し、コンテンツ表示効果を改善しました。
+- **リップル管理**: リップル効果管理モジュールを追加し、視覚的なインタラクション効果を強化しました。
+
+## 🆕 v5.0 アップデート
 - **Pio Live2D統合**: Pio Live2Dキャラクターを統合し、可愛らしいインタラクティブな仲間を提供してユーザーエンゲージメントを向上させます。
 - **高度な設定**: モデルパス、位置、サイズ、会話内容など、`src/config.ts`で詳細な設定をサポートし、パーソナライズされたニーズに対応します。
 - **シームレスなナビゲーション**: 「ホームに戻る」機能は、テーマに組み込まれたSwupを使用して、スムーズでリフレッシュなしのページ遷移を提供します。
@@ -59,12 +66,8 @@
 - **レスポンシブレイアウト適応：** コンポーネントがレスポンシブレイアウトをサポートし、デバイスタイプに基づいて表示を自動調整
 
 ### 📐 レイアウトシステムの最適化
-- **サイドバー位置の動的調整：** 左右サイドバーの切り替えをサポートし、レイアウトが自動的に適応
-- **記事ディレクトリのインテリジェント配置：** サイドバーが右側にある場合、記事ナビゲーションが自動的に左側に移動し、より良い読書体験を提供
-- **グリッドレイアウトの改善：** CSS Gridレイアウトを最適化し、コンテナ幅の異常問題を解決
-
 ### 🎛️ 設定ファイル形式の標準化
-- **標準化された設定形式：** 統一されたコンポーネント設定ファイル形式の仕様を作成
+ - **Umami API キー（任意）：** Umami アナリティクスを使用する場合は、デプロイ先プラットフォームに環境変数 `UMAMI_API_KEY` を設定するか、プロジェクトの設定ファイルに直接キーを記載することを推奨します。
 - **型安全性：** 設定の型安全性を確保する包括的なTypeScript型定義
 - **拡張性：** カスタムコンポーネントタイプと設定オプションのサポート
 
@@ -94,11 +97,7 @@
 - [x] 読書時間の推定
 - [x] 記事のカテゴリ化とタグシステム
 
-### 🌐 国際化
-- [x] **多言語サポート**とリアルタイム翻訳
-- [x] ユーザー設定に基づく**自動言語検出**
-- [x] Edge Translateによる**クライアントサイド翻訳**
-- [x] 10以上の言語をサポート（中国語、英語、日本語、韓国語、スペイン語など）
+
 
 ### 📱 特別ページ
 - [x] **アニメトラッキングページ** - アニメの視聴進捗と評価を追跡
@@ -137,7 +136,7 @@
 3. **ブログを設定：**
    - `src/config.ts`を編集してブログ設定をカスタマイズ
    - サイト情報、テーマカラー、バナー画像、ソーシャルリンクを更新
-   - 翻訳設定と機能ページの機能を設定
+   - 機能ページの機能を設定
 
 4. **開発サーバーを起動：**
    ```bash
@@ -256,11 +255,6 @@ export const siteConfig: SiteConfig = {
     hue: 210, // 0-360、テーマの色相
     fixed: false, // テーマカラーピッカーを非表示
   },
-  translate: {
-    enable: true, // 翻訳を有効化
-    service: "client.edge", // 翻訳サービス
-    defaultLanguage: "japanese",
-  },
   banner: {
     enable: true,
     src: ["assets/banner/1.webp"], // バナー画像
@@ -298,13 +292,11 @@ export const siteConfig: SiteConfig = {
 - オリジナルの[Fuwari](https://github.com/saicaca/fuwari)テンプレートをベースにしています
 - [Astro](https://astro.build)と[Tailwind CSS](https://tailwindcss.com)で構築
 - [Yukina](https://github.com/WhitePaper233/yukina) - 美しくエレガントなブログテンプレートにインスパイアされました
-- 翻訳機能は[translate](https://gitee.com/mail_osc/translate)によって提供 - AI i18n自動HTML翻訳ソリューション
 - アイコンは[Iconify](https://iconify.design/)から
 
 ### 特別な感謝
 
 - **[Yukina](https://github.com/WhitePaper233/yukina)** - このプロジェクトの形成に役立ったデザインのインスピレーションと創造性を提供してくれたことに感謝します。Yukinaは優れたデザイン原則とユーザーエクスペリエンスを示す、エレガントなブログテンプレートです。
-- **[translate](https://gitee.com/mail_osc/translate)** - JavaScriptコードたった2行で自動HTML翻訳を可能にする革新的なAI駆動のi18nソリューションを提供してくれたことに感謝します。このオープンソースツールは、多言語サポートを非常にシンプルかつ効率的にします。
 
 ---
 

@@ -64,12 +64,16 @@ export class AnimationManager {
 		this.isAnimating = true;
 		document.documentElement.classList.add("is-leaving");
 
+		// 移动端优化：减少动画延迟，避免闪烁
+		const isMobile = window.innerWidth <= 768;
+		const delay = isMobile ? 10 : 30;
+
 		// 添加离开动画类到主要元素
 		const mainElements = document.querySelectorAll(".transition-leaving");
 		mainElements.forEach((element, index) => {
 			setTimeout(() => {
 				element.classList.add("animate-leave");
-			}, index * 30); // 30ms 的错开延迟
+			}, index * delay);
 		});
 	}
 
@@ -102,7 +106,7 @@ export class AnimationManager {
 		animatedElements.forEach((element, index) => {
 			const htmlElement = element as HTMLElement;
 			const delay =
-				Number.parseInt(htmlElement.style.animationDelay) || index * 50;
+				Number.parseInt(htmlElement.style.animationDelay, 10) || index * 50;
 
 			// 重置动画
 			htmlElement.style.opacity = "0";
@@ -115,6 +119,26 @@ export class AnimationManager {
 				htmlElement.style.transform = "translateY(0)";
 			}, delay);
 		});
+
+		// 重新初始化侧边栏组件
+		this.initializeSidebarComponents();
+	}
+
+	/**
+	 * 初始化侧边栏组件
+	 */
+	private initializeSidebarComponents(): void {
+		// 查找页面中的侧边栏元素
+		const sidebar = document.getElementById("sidebar");
+		if (sidebar) {
+			// 触发自定义事件，通知侧边栏重新初始化
+			const event = new CustomEvent("sidebar:init");
+			sidebar.dispatchEvent(event);
+		}
+
+		// 触发全局事件，通知所有组件重新初始化
+		const globalEvent = new CustomEvent("page:reinit");
+		document.dispatchEvent(globalEvent);
 	}
 
 	/**

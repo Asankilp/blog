@@ -15,6 +15,7 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
+import { expressiveCodeConfig } from "./src/config.ts";
 import { copyPostAttachmentsIntegration } from "./src/plugins/copy-post-attachments.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -64,11 +65,11 @@ export default defineConfig({
 				"fa6-regular": ["*"],
 				"fa6-solid": ["*"],
 				mdi: ["*"],
+				"simple-icons": ["*"],
 			},
 		}),
 		expressiveCode({
-			themes: ["github-light", "github-dark"],
-			themeCSSSelector: (theme) => `[data-theme="${theme}"]`,
+			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
 			plugins: [
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
@@ -101,10 +102,6 @@ export default defineConfig({
 					editorActiveTabIndicatorTopColor: "none",
 					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
 					terminalTitlebarBorderBottomColor: "none",
-					copyButtonBackground: "var(--btn-regular-bg)",
-					copyButtonBackgroundHover: "var(--btn-regular-bg-hover)",
-					copyButtonBackgroundActive: "var(--btn-regular-bg-active)",
-					copyButtonForeground: "var(--btn-content)",
 				},
 				textMarkers: {
 					delHue: 0,

@@ -10,15 +10,15 @@ import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
+import bcryptjs from "bcryptjs";
+import CryptoJS from "crypto-js";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { licenseConfig } from "src/config";
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import CryptoJS from "crypto-js";
-import bcryptjs from "bcryptjs";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
 	return blogEntries.map((entry) => ({
@@ -53,7 +53,6 @@ if (isEncrypted) {
 	passwordHash = bcryptjs.hashSync(entry.data.password, saltRounds);
 }
 
-
 dayjs.extend(utc);
 const lastModified = dayjs(entry.data.updated || entry.data.published)
 	.utc()
@@ -86,7 +85,6 @@ const jsonLd = {
     setOGTypeArticle={true}
     postSlug={entry.slug}
     headings={headings}
-    series={entry.data.series}
 >
     <script
         is:inline
@@ -169,7 +167,7 @@ const jsonLd = {
                 />
                 {
                     !entry.data.image && (
-                        <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5" />
+                        <div class="mt-4 border-[var(--line-divider)] border-dashed border-b-[1px] mb-5" />
                     )
                 }
             </div>
@@ -178,12 +176,15 @@ const jsonLd = {
 
             {
                 entry.data.image && (
-                    <ImageWrapper
-                        id="post-cover"
-                        src={entry.data.image}
-                        basePath={path.join("content/posts/", getDir(entry.id))}
-                        class="mb-8 rounded-xl banner-container onload-animation"
-                    />
+                    <>
+                        <div class="mt-4" />
+                        <ImageWrapper
+                            id="post-cover"
+                            src={entry.data.image}
+                            basePath={path.join("content/posts/", getDir(entry.id))}
+                            class="mb-8 rounded-xl banner-container onload-animation"
+                        />
+                    </>
                 )
             }
 

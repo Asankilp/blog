@@ -5,18 +5,18 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![Mizuki Preview](./README.png)
+![Mizuki Preview](./README.webp)
 
 <table>
   <tr>
-    <td><img alt="" src="docs/image/1.png"></td>
-    <td><img alt="" src="docs/image/2.png"></td>
-    <td><img alt="" src="docs/image/3.png"></td>
+    <td><img alt="" src="docs/image/1.webp"></td>
+    <td><img alt="" src="docs/image/2.webp"></td>
+    <td><img alt="" src="docs/image/3.webp"></td>
   <tr>
   <tr>
-    <td><img alt="" src="docs/image/4.png"></td>
-    <td><img alt="" src="docs/image/5.png"></td>
-    <td><img alt="" src="docs/image/6.png"></td>
+    <td><img alt="" src="docs/image/4.webp"></td>
+    <td><img alt="" src="docs/image/5.webp"></td>
+    <td><img alt="" src="docs/image/6.webp"></td>
   <tr>
 </table>
 
@@ -32,7 +32,13 @@ A modern, feature-rich static blog template built with [Astro](https://astro.bui
 [**日本語**](./docs/README.ja.md) /
 [**中文繁体**](./docs/README.tw.md) /
 
-## 🆕 v4.9 Update
+## 🆕 v6.0 Update
+- **Page Refactoring**: Completely refactored anime, timeline, projects, skills, albums, friends, diary, and about pages for better performance and user experience.
+- **Page Toggle Feature**: Added page toggle functionality with SEO optimization modules, allowing control over feature page visibility.
+- **New Grid Layout**: Introduced new grid article list layout for improved content presentation.
+- **Ripple Management**: Added ripple effect management module for enhanced visual interactions.
+
+## 🆕 v5.0 Update
 - **Pio Live2D Integration**: Added Pio Live2D character, providing a cute interactive companion to enhance user engagement.
 - **Highly Configurable**: Supports detailed configuration in `src/config.ts`, including model path, position, size, dialogue content, etc., to meet personalized needs.
 - **Seamless Navigation**: The "Back to Home" feature now uses the theme's built-in Swup for smooth, no-refresh page transitions.
@@ -95,11 +101,7 @@ A modern, feature-rich static blog template built with [Astro](https://astro.bui
 - [x] Reading time estimation
 - [x] Article categorization and tagging system
 
-### 🌐 Internationalization
-- [x] **Multi-language support** with real-time translation
-- [x] **Automatic language detection** based on user preferences
-- [x] **Client-side translation** powered by Edge Translate
-- [x] Support for 10+ languages (Chinese, English, Japanese, Korean, Spanish, etc.)
+
 
 ### 📱 Special Pages
 - [x] **Anime Tracking Page** - Track anime watching progress and ratings
@@ -138,7 +140,7 @@ A modern, feature-rich static blog template built with [Astro](https://astro.bui
 3. **Configure your blog:**
    - Edit `src/config.ts` to customize blog settings
    - Update site information, theme colors, banner images, and social links
-   - Configure translation settings and feature page functionality
+   - Configure feature page functionality
 
 4. **Start the development server:**
    ```bash
@@ -163,6 +165,8 @@ Deploy your blog to any static hosting platform:
 - **Cloudflare Pages:** Connect your repository
 
 Before deployment, update the `site` URL in `astro.config.mjs`.
+ 
+ - **Umami API key (optional):** If you plan to use Umami analytics, we recommend setting the environment variable `UMAMI_API_KEY` on your deployment platform, or alternatively configure the key directly in the project's configuration files.
 
 ## 📝 Post Frontmatter Format
 
@@ -257,11 +261,6 @@ export const siteConfig: SiteConfig = {
     hue: 210, // 0-360, theme hue
     fixed: false, // Hide theme color picker
   },
-  translate: {
-    enable: true, // Enable translation
-    service: "client.edge", // Translation service
-    defaultLanguage: "english",
-  },
   banner: {
     enable: true,
     src: ["assets/banner/1.webp"], // Banner images
@@ -299,13 +298,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Based on the original [Fuwari](https://github.com/saicaca/fuwari) template
 - Built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com)
 - Inspired by [Yukina](https://github.com/WhitePaper233/yukina) - a beautiful and elegant blog template
-- Translation functionality powered by [translate](https://gitee.com/mail_osc/translate) - AI i18n automatic HTML translation solution
 - Icons from [Iconify](https://iconify.design/)
 
 ### Special Thanks
 
 - **[Yukina](https://github.com/WhitePaper233/yukina)** - Thanks for providing design inspiration and creativity that helped shape this project. Yukina is an elegant blog template that demonstrates excellent design principles and user experience.
-- **[translate](https://gitee.com/mail_osc/translate)** - Thanks for providing an innovative AI-driven i18n solution that enables automatic HTML translation with just two lines of JavaScript code. This open-source tool makes multilingual support extremely simple and efficient.
 
 ---
 
