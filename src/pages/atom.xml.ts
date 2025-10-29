@@ -1,28 +1,44 @@
 import { getImage } from "astro:assets";
-import { getCollection } from "astro:content";
-import type { APIContext, ImageMetadata } from "astro";
 import MarkdownIt from "markdown-it";
 import { parse as htmlParser } from "node-html-parser";
 import sanitizeHtml from "sanitize-html";
-import { siteConfig, profileConfig } from "@/config";
+import { profileConfig, siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
+import { isAttachmentUrl } from "../plugins/attachment-utils";
+
+type EndpointContext = {
+	site?: string;
+	[key: string]: unknown;
+};
+
+type GetImageSrc = Parameters<typeof getImage>[0]["src"];
 
 const markdownParser = new MarkdownIt();
 
-// get dynamic import of images as a map collection
-const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
-	"/src/content/**/*.{jpeg,jpg,png,gif,webp}", // include posts and assets
-);
+const safeDecodeURI = (value: string): string => {
+	try {
+		return decodeURI(value);
+	} catch (_err) {
+		return value;
+	}
+};
 
-export async function GET(context: APIContext) {
+// get dynamic import of images as a map collection
+const imagesGlob = import.meta.glob(
+	"/src/content/**/*.{jpeg,jpg,png,gif,webp}",
+) as Record<string, () => Promise<{ default: GetImageSrc }>>;
+
+export async function GET(context: EndpointContext) {
 	if (!context.site) {
 		throw Error("site not set");
 	}
 
 	// Use the same ordering as site listing (pinned first, then by published desc)
 	// 过滤掉加密文章和草稿文章
-	const posts = (await getSortedPosts()).filter((post) => !post.data.encrypted && post.data.draft !== true);
-	
+	const posts = (await getSortedPosts()).filter(
+		(post) => !post.data.encrypted && post.data.draft !== true,
+	);
+
 	// 创建Atom feed头部
 	let atomFeed = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -43,8 +59,10 @@ export async function GET(context: APIContext) {
 		const images = html.querySelectorAll("img");
 
 		for (const img of images) {
-			const src = img.getAttribute("src");
-			if (!src) continue;
+			const rawSrc = img.getAttribute("src");
+			if (!rawSrc) continue;
+
+			const src = safeDecodeURI(rawSrc);
 
 			// Handle content-relative images and convert them to built _astro paths
 			if (
@@ -86,10 +104,9 @@ export async function GET(context: APIContext) {
 					}
 				}
 
-				const imageMod = await imagesGlob[importPath]?.()?.then(
-					(res) => res.default,
-				);
-				if (imageMod) {
+				const imageLoader = imagesGlob[importPath];
+				if (imageLoader) {
+					const { default: imageMod } = await imageLoader();
 					const optimizedImg = await getImage({ src: imageMod });
 					img.setAttribute("src", new URL(optimizedImg.src, context.site).href);
 				} else {
@@ -102,6 +119,32 @@ export async function GET(context: APIContext) {
 				// images starting with `/` are in public dir
 				img.setAttribute("src", new URL(src, context.site).href);
 			}
+		}
+
+		const anchors = html.querySelectorAll("a");
+		for (const anchor of anchors) {
+			const rawHref = anchor.getAttribute("href");
+			if (!rawHref) continue;
+
+			const href = safeDecodeURI(rawHref);
+			if (!isAttachmentUrl(href)) {
+				continue;
+			}
+
+			const hasProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(href);
+			if (hasProtocol) {
+				continue;
+			}
+
+			let resolvedHref: string;
+			if (href.startsWith("/")) {
+				resolvedHref = new URL(href, context.site).href;
+			} else {
+				const postBaseUrl = new URL(`/posts/${post.slug}/`, context.site);
+				resolvedHref = new URL(href, postBaseUrl).href;
+			}
+
+			anchor.setAttribute("href", resolvedHref);
 		}
 
 		// 添加Atom条目
@@ -122,14 +165,14 @@ export async function GET(context: APIContext) {
     <author>
       <name>${profileConfig.name}</name>
     </author>`;
-    
-    // 添加分类标签
-    if (post.data.category) {
-      atomFeed += `
+
+		// 添加分类标签
+		if (post.data.category) {
+			atomFeed += `
     <category term="${post.data.category}"></category>`;
-    }
-    
-    atomFeed += `
+		}
+
+		atomFeed += `
   </entry>`;
 	}
 
@@ -140,7 +183,6 @@ export async function GET(context: APIContext) {
 	return new Response(atomFeed, {
 		headers: {
 			"Content-Type": "application/atom+xml; charset=utf-8",
-			
 		},
 	});
 }
