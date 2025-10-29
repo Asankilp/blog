@@ -15,6 +15,7 @@ export interface Project {
 	endDate?: string;
 	featured?: boolean;
 	tags?: string[];
+	visitUrl?: string; // 添加前往项目链接字段
 }
 
 export const projectsData: Project[] = [

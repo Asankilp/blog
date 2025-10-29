@@ -5,18 +5,18 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![Mizuki Preview](../README.png)
+![Mizuki Preview](../README.webp)
 
 <table>
   <tr>
-    <td><img alt="" src="image/1.png"></td>
-    <td><img alt="" src="image/2.png"></td>
-    <td><img alt="" src="image/3.png"></td>
+    <td><img alt="" src="image/1.webp"></td>
+    <td><img alt="" src="image/2.webp"></td>
+    <td><img alt="" src="image/3.webp"></td>
   <tr>
   <tr>
-    <td><img alt="" src="image/4.png"></td>
-    <td><img alt="" src="image/5.png"></td>
-    <td><img alt="" src="image/6.png"></td>
+    <td><img alt="" src="image/4.webp"></td>
+    <td><img alt="" src="image/5.webp"></td>
+    <td><img alt="" src="image/6.webp"></td>
   <tr>
 </table>
 
@@ -31,7 +31,14 @@
 [**日本語**](./README.ja.md) /
 [**中文繁体**](./README.tw.md) /
 
-## 🆕 v4.9 版本更新
+
+## 🆕 v6.0 版本更新
+- **頁面重構**：完全重構了番劇、時間線、項目、技能、相冊、友情連結、日記、關於頁面，提升性能和用戶體驗。
+- **頁面開關功能**：添加了頁面開關功能和SEO優化模組，可以控制特色頁面的顯示與隱藏。
+- **新的網格佈局**：添加了新的網格文章列表佈局，改善內容展示效果。
+- **水波紋管理**：添加了水波紋管理模組，增強視覺交互效果。
+
+## 🆕 v5.0 版本更新
 - **Pio 看板娘整合**：整合了 Pio 看板娘，提供可愛的互動角色，增強使用者互動體驗。
 - **高度可配置**：支援在 `src/config.ts` 中進行詳細配置，包括模型路徑、位置、尺寸、對話內容等，滿足個性化需求。
 - **無刷新跳轉**：看板娘的返回首頁功能現在使用主題自帶的 Swup 無刷新跳轉，提供更流暢、無縫的頁面切換體驗。
@@ -94,11 +101,7 @@
 - [x] 閱讀時間估算
 - [x] 文章分類和標籤系統
 
-### 🌐 國際化支援
-- [x] **多語言支援**，即時翻譯功能
-- [x] **自動語言檢測**，基於使用者偏好
-- [x] **客戶端翻譯**，由 Edge Translate 驅動
-- [x] 支援 10+ 種語言（中文、英文、日文、韓文、西班牙文等）
+
 
 ### 📱 特色頁面
 - [x] **追番頁面** - 追蹤動畫觀看進度和評分
@@ -162,6 +165,8 @@
 - **Cloudflare Pages：** 連接您的儲存庫
 
 部署前，請在 `astro.config.mjs` 中更新 `site` URL。
+
+- **環境變數配置：** 如果你需要使用 Umami 統計，建議在部署平台設定環境變數 `UMAMI_API_KEY` 為你的 Umami API 金鑰，或直接在配置檔中修改。
 
 ## 📝 文章前言格式
 
@@ -256,11 +261,6 @@ export const siteConfig: SiteConfig = {
     hue: 210, // 0-360，主題色調
     fixed: false, // 隱藏主題色選擇器
   },
-  translate: {
-    enable: true, // 啟用翻譯功能
-    service: "client.edge", // 翻譯服務
-    defaultLanguage: "chinese_traditional",
-  },
   banner: {
     enable: true,
     src: ["assets/banner/1.webp"], // 橫幅圖片
@@ -298,13 +298,11 @@ export const siteConfig: SiteConfig = {
 - 基於原始 [Fuwari](https://github.com/saicaca/fuwari) 模板
 - 使用 [Astro](https://astro.build) 和 [Tailwind CSS](https://tailwindcss.com) 構建
 - 靈感來源於 [Yukina](https://github.com/WhitePaper233/yukina) - 一個美麗優雅的部落格模板
-- 翻譯功能由 [translate](https://gitee.com/mail_osc/translate) 提供支援 - AI i18n 自動HTML翻譯解決方案
 - 圖標來自 [Iconify](https://iconify.design/)
 
 ### 特別感謝
 
 - **[Yukina](https://github.com/WhitePaper233/yukina)** - 感謝提供設計靈感和創意，幫助塑造了這個專案。Yukina 是一個優雅的部落格模板，展現了出色的設計原則和使用者體驗。
-- **[translate](https://gitee.com/mail_osc/translate)** - 感謝提供創新的AI驅動i18n解決方案，僅需兩行JavaScript程式碼即可實現HTML自動翻譯。這個開源工具讓多語言支援變得極其簡單高效。
 
 ---
 

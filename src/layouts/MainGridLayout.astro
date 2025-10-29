@@ -31,7 +31,6 @@ interface Props {
 	setOGTypeArticle?: boolean;
 	postSlug?: string;
 	headings?: MarkdownHeading[];
-        series?: string;
 }
 
 // 类型守卫函数
@@ -100,7 +99,6 @@ const {
 	setOGTypeArticle,
 	postSlug,
 	headings = [],
-        series,
 } = Astro.props;
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
@@ -174,6 +172,8 @@ const transparentClass = shouldEnableTransparency
 ---
 
 <Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} postSlug={postSlug}>
+
+
 
 <!-- 全屏壁纸 - 仅在banner关闭且全屏壁纸启用时显示 -->
 {!siteConfig.banner.enable && fullscreenWallpaperConfig.enable && (
@@ -278,18 +278,20 @@ const transparentClass = shouldEnableTransparency
                     )}
                     {siteConfig.banner.homeText?.subtitle && (
                         <h2 class="banner-subtitle text-xl lg:text-3xl text-white/90 drop-shadow-md">
-                            {siteConfig.banner.homeText.typewriter?.enable ? (
-                                <TypewriterText 
-                                    text={siteConfig.banner.homeText.subtitle}
-                                    speed={siteConfig.banner.homeText.typewriter.speed}
-                                    deleteSpeed={siteConfig.banner.homeText.typewriter.deleteSpeed}
-                                    pauseTime={siteConfig.banner.homeText.typewriter.pauseTime}
-                                />
-                            ) : (
-                                Array.isArray(siteConfig.banner.homeText.subtitle) 
-                                    ? siteConfig.banner.homeText.subtitle[0] 
-                                    : siteConfig.banner.homeText.subtitle
-                            )}
+                            <span class="inline-block min-h-[1.2em]">
+                                {siteConfig.banner.homeText.typewriter?.enable ? (
+                                    <TypewriterText 
+                                        text={siteConfig.banner.homeText.subtitle}
+                                        speed={siteConfig.banner.homeText.typewriter.speed}
+                                        deleteSpeed={siteConfig.banner.homeText.typewriter.deleteSpeed}
+                                        pauseTime={siteConfig.banner.homeText.typewriter.pauseTime}
+                                    />
+                                ) : (
+                                    Array.isArray(siteConfig.banner.homeText.subtitle) 
+                                        ? siteConfig.banner.homeText.subtitle[0] 
+                                        : siteConfig.banner.homeText.subtitle
+                                )}
+                            </span>
                         </h2>
                     )}
                 </div>
@@ -298,62 +300,66 @@ const transparentClass = shouldEnableTransparency
     )}
     
     <!-- Water waves effect -->
-    <div class="waves absolute -bottom-[1px] h-[10vh] max-h-[9.375rem] min-h-[3.125rem] w-full md:h-[15vh]" id="header-waves" style="transform: translateZ(0); will-change: fill;">
-        <svg
-            class="waves"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 20 150 32"
-            preserveAspectRatio="none"
-            shape-rendering="auto"
-            style="transform: translateZ(0); backface-visibility: hidden;"
-        >
-            <defs>
-                <path
-                    id="gentle-wave"
-                    d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v48h-352z"
-                >
-                </path>
-            </defs>
-            <g class="parallax" style="transform: translateZ(0);">
-                <use
-                    xlink:href="#gentle-wave"
-                    x="48"
-                    y="0"
-                    class="opacity-25 fill-[var(--page-bg)]"
-                    style="animation-delay: -2s; animation-duration: 7s; will-change: transform;"
-                ></use>
-                <use
-                    xlink:href="#gentle-wave"
-                    x="48"
-                    y="3"
-                    class="opacity-50 fill-[var(--page-bg)]"
-                    style="animation-delay: -3s; animation-duration: 10s; will-change: transform;"
-                ></use>
-                <use
-                    xlink:href="#gentle-wave"
-                    x="48"
-                    y="5"
-                    class="opacity-75 fill-[var(--page-bg)]"
-                    style="animation-delay: -4s; animation-duration: 13s; will-change: transform;"
-                ></use>
-                <use
-                    xlink:href="#gentle-wave"
-                    x="48"
-                    y="7"
-                    class="fill-[var(--page-bg)]"
-                    style="animation-delay: -5s; animation-duration: 20s; will-change: transform;"
-                ></use>
-            </g>
-        </svg>
-    </div>
+    {siteConfig.banner.waves?.enable && (
+        <div class="waves absolute -bottom-[1px] h-[10vh] max-h-[9.375rem] min-h-[3.125rem] w-full md:h-[15vh]" id="header-waves" style="transform: translateZ(0); will-change: fill;">
+            <svg
+                class="waves"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 20 150 32"
+                preserveAspectRatio="none"
+                shape-rendering="auto"
+                style="transform: translateZ(0); backface-visibility: hidden;"
+            >
+                <defs>
+                    <path
+                        id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v48h-352z"
+                    >
+                    </path>
+                </defs>
+                <g class="parallax" style="transform: translateZ(0);">
+                    <use
+                        xlink:href="#gentle-wave"
+                        x="48"
+                        y="0"
+                        class="opacity-25 fill-[var(--page-bg)]"
+                        style="animation-delay: -2s; animation-duration: 7s; will-change: transform;"
+                    ></use>
+                    <use
+                        xlink:href="#gentle-wave"
+                        x="48"
+                        y="3"
+                        class="opacity-50 fill-[var(--page-bg)]"
+                        style="animation-delay: -3s; animation-duration: 10s; will-change: transform;"
+                    ></use>
+                    <use
+                        xlink:href="#gentle-wave"
+                        x="48"
+                        y="5"
+                        class="opacity-75 fill-[var(--page-bg)]"
+                        style="animation-delay: -4s; animation-duration: 13s; will-change: transform;"
+                    ></use>
+                    <use
+                        xlink:href="#gentle-wave"
+                        x="48"
+                        y="7"
+                        class="fill-[var(--page-bg)]"
+                        style="animation-delay: -5s; animation-duration: 20s; will-change: transform;"
+                    ></use>
+                </g>
+            </svg>
+        </div>
+    )}
+    
+
 </div>}
 
 <!-- Main content -->
 <div class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${!siteConfig.banner.enable ? 'no-banner-layout' : ''} ${transparentClass}`} style={`top: ${finalMainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto">
-        <div id="main-grid" class={`transition duration-700 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-0 md:px-4 ${!mobileShowSidebar ? 'mobile-no-sidebar' : ''}`}
+        <div id="main-grid" class={`transition duration-700 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-2 md:px-4 ${!mobileShowSidebar ? 'mobile-no-sidebar' : ''}`}
         >
             <!-- Banner image credit -->
             {hasBannerCredit && <a href={siteConfig.banner.credit.url} id="banner-credit" target="_blank" rel="noopener" aria-label="Visit image source"
@@ -369,7 +375,7 @@ const transparentClass = shouldEnableTransparency
             </a>}
 
 
-            {(mobileShowSidebar || tabletShowSidebar || desktopShowSidebar) && <SideBar class={`${sidebarClass} ${transparentClass}`} headings={headings} series={ series }></SideBar>}
+            {(mobileShowSidebar || tabletShowSidebar || desktopShowSidebar) && <SideBar class={`${sidebarClass} ${transparentClass}`} headings={headings}></SideBar>}
 
             <main id="swup-container" class={`${mainContentClass} transition-main`}>
                 <div id="content-wrapper" class="onload-animation transition-leaving">
@@ -392,7 +398,7 @@ const transparentClass = shouldEnableTransparency
 </div>
 
 <!-- The things that should be under the banner, only the TOC for now -->
-<div class="absolute w-full z-0 hidden xl:block">
+<div class="absolute w-full z-0 hidden 2xl:block">
     <div class="relative max-w-[var(--page-width)] mx-auto">
         <!-- TOC component -->
         {siteConfig.toc.enable && <div id="toc-wrapper" class:list={["hidden lg:block transition absolute top-0 w-[var(--toc-width)] items-center",
@@ -423,6 +429,8 @@ const transparentClass = shouldEnableTransparency
 .banner-subtitle {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     animation: fadeInUp 1s ease-out 0.3s both;
+    min-height: 1.5em; /* 确保副标题容器有最小高度 */
+    line-height: 1.2; /* 确保一致的行高 */
 }
 
 @keyframes fadeInUp {
@@ -747,8 +755,10 @@ const transparentClass = shouldEnableTransparency
         transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
         /* 硬件加速优化 */
         will-change: top;
+        /* 禁用transform以保证back to top 按钮可以显示
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
+        */
     }
     
     .absolute.w-full.z-30.mobile-main-no-banner {
