@@ -16,18 +16,23 @@ const className = Astro.props.class;
 
 // 获取导航栏透明模式配置
 const navbarTransparentMode =
-	siteConfig.banner?.navbar?.transparentMode || "semi";
+    siteConfig.banner?.navbar?.transparentMode || "semi";
 
 // 检查是否为首页
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
 
+const navbarTitle = siteConfig.navbarTitle;
+const navbarIconUrl = navbarTitle?.icon ? url(navbarTitle.icon) : undefined;
+const isNavbarIconSvg =
+    typeof navbarIconUrl === "string" && navbarIconUrl.toLowerCase().endsWith(".svg");
+
 let links: NavBarLink[] = navBarConfig.links.map(
-	(item: NavBarLink | LinkPreset): NavBarLink => {
-		if (typeof item === "number") {
-			return LinkPresets[item];
-		}
-		return item;
-	},
+    (item: NavBarLink | LinkPreset): NavBarLink => {
+        if (typeof item === "number") {
+            return LinkPresets[item];
+        }
+        return item;
+    },
 );
 ---
 <div id="navbar" class="z-50 onload-animation" data-transparent-mode={navbarTransparentMode} data-is-home={isHomePage}>
@@ -36,10 +41,28 @@ let links: NavBarLink[] = navBarConfig.links.map(
         <a href={url('/')} class="btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95">
             <div class="flex flex-row items-center text-md">
                 {/* 使用navbarTitle配置或默认配置 */}
-                {siteConfig.navbarTitle ? (
+                {navbarTitle ? (
                     <>
-                        <img src={url(siteConfig.navbarTitle.icon || "/assets/home/home.png")} alt={siteConfig.navbarTitle.text} class="h-[1.75rem] w-[1.75rem] mb-1 mr-2 object-contain" loading="lazy" />
-                        <span class="dark:text-white text-black">{siteConfig.navbarTitle.text}</span>
+                        {navbarIconUrl ? (
+                            isNavbarIconSvg ? (
+                                <span
+                                    class="navbar-svg-icon h-[1.75rem] w-[1.75rem] mb-1 mr-2"
+                                    style={`--navbar-icon-url: url('${navbarIconUrl}')`}
+                                    role="img"
+                                    aria-label={navbarTitle.text}
+                                ></span>
+                            ) : (
+                                <img
+                                    src={navbarIconUrl}
+                                    alt={navbarTitle.text}
+                                    class="h-[1.75rem] w-[1.75rem] mb-1 mr-2 object-contain"
+                                    loading="lazy"
+                                />
+                            )
+                        ) : (
+                            <Icon name="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
+                        )}
+                        <span class="dark:text-white text-black">{navbarTitle.text}</span>
                     </>
                 ) : (
                     <>
@@ -224,3 +247,18 @@ if (document.readyState === 'loading') {
     loadPagefind();
 }
 </script>}
+
+<style>
+    .navbar-svg-icon {
+        display: inline-block;
+        background-color: currentColor;
+        mask-image: var(--navbar-icon-url);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        -webkit-mask-image: var(--navbar-icon-url);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        -webkit-mask-size: contain;
+    }
+</style>
