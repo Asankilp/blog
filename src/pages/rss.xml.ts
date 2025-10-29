@@ -11,6 +11,14 @@ import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 const markdownParser = new MarkdownIt();
 
+const safeDecodeURI = (value: string): string => {
+	try {
+		return decodeURI(value);
+	} catch (_err) {
+		return value;
+	}
+};
+
 // get dynamic import of images as a map collection
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
 	"/src/content/**/*.{jpeg,jpg,png,gif,webp}", // include posts and assets
@@ -34,8 +42,10 @@ export async function GET(context: APIContext) {
 		const images = html.querySelectorAll("img");
 
 		for (const img of images) {
-			const src = img.getAttribute("src");
-			if (!src) continue;
+			const rawSrc = img.getAttribute("src");
+			if (!rawSrc) continue;
+
+			const src = safeDecodeURI(rawSrc);
 
 			// Handle content-relative images and convert them to built _astro paths
 			if (
