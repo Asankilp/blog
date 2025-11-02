@@ -144,7 +144,7 @@ if (ANIME_MODE === "local") {
 	animeList = localAnimeList;
 } else {
 	// 使用Bangumi API（默认模式）
-	// 获取与处理在看列表（type=3）看过列表（type=2）
+	// 获取与处理在看列表（type=3）看过列表（type=2）想看列表（type=1）搁置列表（type=4）抛弃列表（type=5）
 	const watchingData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 3);
 	const completedData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 2);
   const plannedData = await fetchBangumiCollection(BANGUMI_USER_ID, 2, 1);

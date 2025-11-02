@@ -202,6 +202,12 @@ export const navBarConfig: NavBarConfig = {
 					external: true,
 					icon: "fa6-brands:steam",
 				},
+				{
+					name: "osu!",
+					url: "https://osu.ppy.sh/users/20059922",
+					external: true,
+					icon: "simple-icons:osu",
+				},
 			],
 		},
 		{
@@ -262,6 +268,11 @@ export const profileConfig: ProfileConfig = {
 			name: "Steam",
 			icon: "fa6-brands:steam",
 			url: "https://steamcommunity.com/id/asankilp/",
+		},
+		{
+			name: "osu!",
+			icon: "simple-icons:osu",
+			url: "https://osu.ppy.sh/users/20059922",
 		},
 	],
 };
