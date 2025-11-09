@@ -172,7 +172,15 @@ export default defineConfig({
 		],
 	},
 	vite: {
-		assetsInclude: ["**/*.gz"],
+		assetsInclude: [
+			"**/*.gz",
+			"**/*.zip",
+			"**/*.exe",
+			"**/*.txt",
+			"**/*.apk",
+			"**/*.pdf",
+			"**/*.doc",
+		],
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {

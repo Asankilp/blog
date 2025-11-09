@@ -4,6 +4,11 @@ export const ATTACHMENT_EXTENSIONS = [
 	".zip",
 	".rar",
 	".7z",
+	".exe",
+	".txt",
+	".apk",
+	".pdf",
+	".doc",
 ] as const;
 
 export function isAttachmentPath(input: string): boolean {
