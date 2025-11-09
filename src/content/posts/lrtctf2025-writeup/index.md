@@ -46,7 +46,7 @@ print(response.headers)
 
 ![image.png](image%202.png)
 
-响应体出现 `Login success!`，响应头出现了 Cookie，带有 JWT Token，对其进行反序列化。
+响应体出现 `Login success!`，响应头出现了 Cookie，带有 JWT Token，对其进行解码。
 
 ![image.png](image%203.png)
 
@@ -92,7 +92,7 @@ lrtctf{tsdandassociates.co.sz/w0ks//?YO=1702920835}
 
 ![4.png](4.png)
 
-`number8.rar`为rar5加密压缩包，使用 hashcat 和 rar2john 进行暴力破解，密码为8位数字。
+`number8.rar`为rar5加密压缩包，使用 [hashcat](https://hashcat.net/hashcat/) 和 [John the Ripper](https://www.openwall.com/john/) 中的 rar2john 工具进行暴力破解，密码为8位数字。
 
 ![image.png](image%206.png)
 
@@ -114,7 +114,7 @@ lrtctf{tsdandassociates.co.sz/w0ks//?YO=1702920835}
 
 ![part_02.jpg](part_02.jpg)
 
-第三部分被放在一个zip压缩包里，尝试之后可以发现它是伪加密，将标志位修改回00 00即可打开得到第三部分二维码
+第三部分被放在一个zip压缩包里，尝试之后可以发现它是伪加密，将标志位修改回 `00 00` 即可打开得到第三部分二维码
 
 ![image-20251109184206479](image-20251109184206479.png)
 
@@ -178,7 +178,7 @@ lrtctf{hajimiwo_nanbeiludou_axigaha_yakunailo}
 
 可以发现其保持flag基本格式，猜测为凯撒加密
 
-flag头为4位，那么flag头就是flag{
+flag头为4位，那么flag头就是 `flag{`
 
 则其偏移为
 
@@ -237,15 +237,15 @@ flag{wow_you_are_so_smart}
 
 [Reverse Hidden Sections.exe](Reverse%20Hidden%20Sections.exe)
 
-拖附件入IDA,在主函数中可以找到装真正逻辑的state_machine函数
+拖附件入IDA,在主函数中可以找到装真正逻辑的 `state_machine` 函数
 
-从未去除的符号中可以看到xored，keys等变量，以及明文存储的几部分flag
+从未去除的符号中可以看到 `xored`，`keys`等变量，以及明文存储的几部分flag
 
 ![image-20251109190411027](image-20251109190411027.png)
 
 ![image-20251109190506320](image-20251109190506320.png)
 
-补上flag头lrtctf{}后即可
+补上flag头`lrtctf{}`后即可
 
 ### Flag
 
@@ -257,7 +257,7 @@ lrtctf{X0r_r3v3s3_and_puzzl3_d3cod3}
 
 [app-release.apk](app-release.apk)
 
-在assets找到payload.enc，base64编码
+在assets找到 `payload.enc`，base64编码
 
 ![image-20251109191624685](image-20251109191624685.png)
 
