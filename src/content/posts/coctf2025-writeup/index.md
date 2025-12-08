@@ -1,7 +1,7 @@
 ---
 title: COCTF2025  WriteUp
 published: 2025-10-03
-pinned: true
+pinned: false
 description: 个人参加 COCTF2025 的 WriteUp
 tags: [CTF]
 category: CTF
