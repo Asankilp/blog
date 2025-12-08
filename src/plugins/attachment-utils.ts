@@ -9,6 +9,7 @@ export const ATTACHMENT_EXTENSIONS = [
 	".apk",
 	".pdf",
 	".doc",
+	".py",
 ] as const;
 
 export function isAttachmentPath(input: string): boolean {

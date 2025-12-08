@@ -180,6 +180,7 @@ export default defineConfig({
 			"**/*.apk",
 			"**/*.pdf",
 			"**/*.doc",
+			"**/*.py",
 		],
 		build: {
 			rollupOptions: {
