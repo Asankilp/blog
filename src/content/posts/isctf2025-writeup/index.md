@@ -5,7 +5,7 @@ description: 打ctf就一定要打得厉害吗？打得很好笑就不行吗？
 tags: [CTF]
 category: CTF
 author: Asankilp
-draft: true
+draft: false
 series: "CTF"
 ---
 # Web
