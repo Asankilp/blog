@@ -116,7 +116,19 @@
         overflow-x: auto;
         margin: 1em 0;
     }
-    
+/* 
+    figure.md-figure {
+        @apply my-6 text-center;
+    }
+
+    figure.md-figure > img {
+        @apply mx-auto block;
+    }
+
+    figure.md-figure > .md-figure-caption {
+        @apply mt-2 text-sm text-[var(--post-subtitle)] text-center;
+    }
+     */
 }
 
 /* 修复代码块内列表项标记颜色问题 */

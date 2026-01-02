@@ -21,10 +21,12 @@ import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-cop
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
+import { rehypeImageCaption } from "./src/plugins/rehype-image-caption.ts";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { remarkAttachmentLinks } from "./src/plugins/remark-attachment-links.ts";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
+import { remarkImageSize } from "./src/plugins/remark-image-size.ts";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // https://astro.build/config
@@ -126,6 +128,7 @@ export default defineConfig({
 			remarkDirective,
 			remarkSectionize,
 			remarkAttachmentLinks,
+			remarkImageSize,
 			parseDirectiveNode,
 			remarkMermaid,
 		],
@@ -133,6 +136,7 @@ export default defineConfig({
 			rehypeKatex,
 			rehypeSlug,
 			rehypeMermaid,
+			rehypeImageCaption,
 			[
 				rehypeComponents,
 				{
