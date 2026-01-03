@@ -2,14 +2,12 @@ import { getImage } from "astro:assets";
 import type { RSSFeedItem } from "@astrojs/rss";
 import rss from "@astrojs/rss";
 import type { APIContext, ImageMetadata } from "astro";
-import MarkdownIt from "markdown-it";
 import { parse as htmlParser } from "node-html-parser";
 import sanitizeHtml from "sanitize-html";
 import { siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
+import { renderMarkdownToHtml } from "@/utils/markdown-processor";
 import { isAttachmentUrl } from "../plugins/attachment-utils";
-
-const markdownParser = new MarkdownIt();
 
 const safeDecodeURI = (value: string): string => {
 	try {
@@ -34,8 +32,8 @@ export async function GET(context: APIContext) {
 	const feed: RSSFeedItem[] = [];
 
 	for (const post of posts) {
-		// convert markdown to html string
-		const body = markdownParser.render(post.body);
+		// convert markdown to html string using site-like pipeline
+		const body = await renderMarkdownToHtml(post.body);
 		// convert html string to DOM-like structure
 		const html = htmlParser.parse(body);
 		// hold all img tags in variable images

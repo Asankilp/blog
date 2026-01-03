@@ -1,9 +1,9 @@
 import { getImage } from "astro:assets";
-import MarkdownIt from "markdown-it";
 import { parse as htmlParser } from "node-html-parser";
 import sanitizeHtml from "sanitize-html";
 import { profileConfig, siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
+import { renderMarkdownToHtml } from "@/utils/markdown-processor";
 import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 type EndpointContext = {
@@ -12,8 +12,6 @@ type EndpointContext = {
 };
 
 type GetImageSrc = Parameters<typeof getImage>[0]["src"];
-
-const markdownParser = new MarkdownIt();
 
 const safeDecodeURI = (value: string): string => {
 	try {
@@ -51,8 +49,8 @@ export async function GET(context: EndpointContext) {
   <language>${siteConfig.lang}</language>`;
 
 	for (const post of posts) {
-		// convert markdown to html string
-		const body = markdownParser.render(post.body);
+		// convert markdown to html string using shared pipeline
+		const body = await renderMarkdownToHtml(post.body);
 		// convert html string to DOM-like structure
 		const html = htmlParser.parse(body);
 		// hold all img tags in variable images
