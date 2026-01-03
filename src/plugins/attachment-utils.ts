@@ -10,6 +10,11 @@ export const ATTACHMENT_EXTENSIONS = [
 	".pdf",
 	".doc",
 	".py",
+	".mp4",
+	".webm",
+	".m4v",
+	".mov",
+	".mkv",
 ] as const;
 
 export function isAttachmentPath(input: string): boolean {

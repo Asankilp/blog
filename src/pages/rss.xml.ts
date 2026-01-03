@@ -5,8 +5,8 @@ import type { APIContext, ImageMetadata } from "astro";
 import { parse as htmlParser } from "node-html-parser";
 import { siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
-import { renderMarkdownToHtml } from "@/utils/markdown-processor";
 import { sanitizeFeedHtml } from "@/utils/feed-sanitizer";
+import { renderMarkdownToHtml } from "@/utils/markdown-processor";
 import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 const safeDecodeURI = (value: string): string => {
@@ -32,6 +32,31 @@ export async function GET(context: APIContext) {
 	const feed: RSSFeedItem[] = [];
 
 	for (const post of posts) {
+		const postBaseUrl = new URL(`/posts/${post.slug}/`, context.site);
+		const toAbsoluteMediaSrc = (raw: string): string => {
+			const src = safeDecodeURI(raw);
+			const hasProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(src);
+			if (hasProtocol || src.startsWith("//")) {
+				return src;
+			}
+			if (src.startsWith("/")) {
+				return new URL(src, context.site).href;
+			}
+			return new URL(src, postBaseUrl).href;
+		};
+		const absolutizeMediaCollection = (
+			collection: import("node-html-parser").HTMLElement[],
+		) => {
+			for (const element of collection) {
+				const rawSrc = element.getAttribute("src");
+				if (!rawSrc) continue;
+				try {
+					element.setAttribute("src", toAbsoluteMediaSrc(rawSrc));
+				} catch (_err) {
+					// ignore invalid URLs
+				}
+			}
+		};
 		// convert markdown to html string using site-like pipeline
 		const body = await renderMarkdownToHtml(post.body);
 		// convert html string to DOM-like structure
@@ -103,6 +128,10 @@ export async function GET(context: APIContext) {
 			}
 		}
 
+		absolutizeMediaCollection(html.querySelectorAll("video"));
+		absolutizeMediaCollection(html.querySelectorAll("source"));
+		absolutizeMediaCollection(html.querySelectorAll("track"));
+
 		const anchors = html.querySelectorAll("a");
 		for (const anchor of anchors) {
 			const href = anchor.getAttribute("href");
@@ -121,7 +150,6 @@ export async function GET(context: APIContext) {
 			if (href.startsWith("/")) {
 				resolvedHref = new URL(href, context.site).href;
 			} else {
-				const postBaseUrl = new URL(`/posts/${post.slug}/`, context.site);
 				resolvedHref = new URL(href, postBaseUrl).href;
 			}
 
