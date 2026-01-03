@@ -3,10 +3,10 @@ import type { RSSFeedItem } from "@astrojs/rss";
 import rss from "@astrojs/rss";
 import type { APIContext, ImageMetadata } from "astro";
 import { parse as htmlParser } from "node-html-parser";
-import sanitizeHtml from "sanitize-html";
 import { siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
 import { renderMarkdownToHtml } from "@/utils/markdown-processor";
+import { sanitizeFeedHtml } from "@/utils/feed-sanitizer";
 import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 const safeDecodeURI = (value: string): string => {
@@ -134,9 +134,7 @@ export async function GET(context: APIContext) {
 			pubDate: post.data.published,
 			link: `/posts/${post.slug}/`,
 			// sanitize the new html string with corrected image paths
-			content: sanitizeHtml(html.toString(), {
-				allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-			}),
+			content: sanitizeFeedHtml(html.toString()),
 		});
 	}
 

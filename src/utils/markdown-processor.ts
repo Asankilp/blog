@@ -5,6 +5,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkDirective from "remark-directive";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
+import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -35,6 +36,7 @@ const rehypeImageCaptionPlugin = asAny(rehypeImageCaption);
 const createMarkdownProcessor = () =>
 	unified()
 		.use(asAny(remarkParse))
+		.use(asAny(remarkGfm))
 		.use(asAny(remarkMath))
 		.use(asAny(remarkGithubAdmonitionsToDirectives))
 		.use(asAny(remarkDirective))

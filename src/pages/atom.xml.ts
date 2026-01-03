@@ -1,9 +1,9 @@
 import { getImage } from "astro:assets";
 import { parse as htmlParser } from "node-html-parser";
-import sanitizeHtml from "sanitize-html";
 import { profileConfig, siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
 import { renderMarkdownToHtml } from "@/utils/markdown-processor";
+import { sanitizeFeedHtml } from "@/utils/feed-sanitizer";
 import { isAttachmentUrl } from "../plugins/attachment-utils";
 
 type EndpointContext = {
@@ -147,9 +147,7 @@ export async function GET(context: EndpointContext) {
 
 		// 添加Atom条目
 		const postUrl = new URL(`posts/${post.slug}/`, context.site).href;
-		const content = sanitizeHtml(html.toString(), {
-			allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-		});
+		const content = sanitizeFeedHtml(html.toString());
 
 		atomFeed += `
   <entry>

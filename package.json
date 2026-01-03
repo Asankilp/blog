@@ -59,6 +59,7 @@
 		"rehype-stringify": "^10.0.1",
 		"remark-directive": "^3.0.1",
 		"remark-directive-rehype": "^0.4.2",
+		"remark-gfm": "^4.0.1",
 		"remark-github-admonitions-to-directives": "^1.0.5",
 		"remark-math": "^6.0.0",
 		"remark-parse": "^11.0.0",
@@ -83,6 +84,7 @@
 		"@types/markdown-it": "^14.1.2",
 		"@types/mdast": "^4.0.4",
 		"@types/sanitize-html": "^2.16.0",
+		"baseline-browser-mapping": "^2.9.11",
 		"postcss-import": "^16.1.1",
 		"postcss-nesting": "^13.0.2"
 	},
