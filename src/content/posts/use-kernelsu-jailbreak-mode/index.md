@@ -66,10 +66,9 @@ KernelSU 拥有极高的权限，安装危险模块（如直接操作 `/system` 
 
 **安装模块应三思而后行！！安装危险模块极有可能变砖，且在未解锁 bl 的情况下极难救砖！！**  
 :::
-可以在模块仓库或通过 zip 文件安装模块。安装、启用/禁用、卸载模块等需要“重启生效”的操作，一般可通过点击 KernelSU 管理器右上角的按钮，选择“软重启”来生效。若仍不生效，则可能需要硬重启设备。
 
 ## 安装 LSPosed
-在 KernelSU 安装 Zygisk Next 及 LSPosed IT，并使用软重启或硬重启设备生效。  
+在 KernelSU 安装 Zygisk Next 及 LSPosed IT，并重启设备生效。  
 若 LSPosed 管理器仍提示“未安装”，则需要以下仓库里的 `fix_lspd.sh` 来修复。
 ::github{repo="xunchahaha/mi_nobl_root"}
 以 root 权限运行该脚本，会使 `zygote64` 被杀死， **所有运行中的应用会被关闭。** 若修复完成，LSPosed 应该可以使用。
