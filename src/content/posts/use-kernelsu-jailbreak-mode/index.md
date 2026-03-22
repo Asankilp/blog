@@ -20,7 +20,7 @@ lang: ''
 :::
 
 :::note
-上一次更新时间：2026-03-14
+上一次更新时间：2026-03-22
 :::
 
 [上一篇文章](../xiaomi-root-privilege-escalation-exploit-with-shizuku/)中说明了利用小米设备的漏洞将 root 权限授予 Shizuku 的方法，近期 [KernelSU](https://kernelsu.org/) 对未解锁 bl 而获取 root 权限的“越狱”提供了官方支持，本文章将说明如何在这种设备上使用 KernelSU。
@@ -69,9 +69,12 @@ KernelSU 拥有极高的权限，安装危险模块（如直接操作 `/system` 
 
 ## 安装 LSPosed
 在 KernelSU 安装 Zygisk Next 及 LSPosed IT，并重启设备生效。  
-若 LSPosed 管理器仍提示“未安装”，则需要以下仓库里的 `fix_lspd.sh` 来修复。
+~~若 LSPosed 管理器仍提示“未安装”，则需要以下仓库里的 `fix_lspd.sh` 来修复。~~
+:::note
+2026-03-22 补充：在 KernelSU 内核版本 32376(提交 `7e568dd`) 以上的环境，不再需要执行该脚本，只需点击 KernelSU 管理器的“软重启”选项即可激活 LSPosed。
+:::
 ::github{repo="xunchahaha/mi_nobl_root"}
-以 root 权限运行该脚本，会使 `zygote64` 被杀死， **所有运行中的应用会被关闭。** 若修复完成，LSPosed 应该可以使用。
+~~以 root 权限运行该脚本，会使 `zygote64` 被杀死， **所有运行中的应用会被关闭。** 若修复完成，LSPosed 应该可以使用。~~
 ![module w-50%](Screenshot_2026-03-11-20-42-53-778_me.weishu.kern.jpg)
 ![lsp w-50%](Screenshot_2026-03-11-20-40-45-625_org.lsposed.ma.jpg)
 :::important
